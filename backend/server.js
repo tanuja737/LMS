@@ -29,7 +29,7 @@ const corsOrigins = process.env.CORS_ORIGIN
       'http://192.168.254.12:8081',
       'http://192.168.254.12:8082',
       'http://192.168.254.12:8083',
-      'https://tanujalms.netlify.app'
+      'https://tanuzalms.netlify.app'
     ];
 
 app.use(cors({

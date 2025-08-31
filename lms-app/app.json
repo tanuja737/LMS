@@ -30,6 +30,13 @@
         "projectId": "b089df54-5678-4abe-8cee-fe76cb5f6efe"
       }
     },
-    "owner": "tanuzaaaaa"
+    "owner": "tanuzaaaaa",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b089df54-5678-4abe-8cee-fe76cb5f6efe"
+    },
+    "android": {}
   }
 }
