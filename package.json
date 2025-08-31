@@ -1,0 +1,16 @@
+{
+  "name": "library-system",
+  "version": "1.0.0",
+  "description": "A comprehensive full-stack library management system with web and mobile interfaces for borrowers and librarians.",
+  "private": true,
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "start:backend": "npm --prefix backend start",
+    "dev:website": "npm --prefix website run dev",
+    "build:website": "npm --prefix website run build",
+    "preview:website": "npm --prefix website run preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
