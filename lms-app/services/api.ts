@@ -16,7 +16,6 @@ class ApiService {
     try {
       return await AsyncStorage.getItem('authToken');
     } catch (error) {
-      console.error('Error getting auth token:', error);
       return null;
     }
   }
@@ -26,7 +25,6 @@ class ApiService {
     try {
       await AsyncStorage.setItem('authToken', token);
     } catch (error) {
-      console.error('Error setting auth token:', error);
     }
   }
 
@@ -35,7 +33,6 @@ class ApiService {
     try {
       await AsyncStorage.removeItem('authToken');
     } catch (error) {
-      console.error('Error removing auth token:', error);
     }
   }
 
@@ -62,7 +59,6 @@ class ApiService {
 
   return data;
     } catch (error) {
-      console.error('API request error:', error);
       throw error;
     }
   }
@@ -70,16 +66,13 @@ class ApiService {
   // Auth methods
   async login(email: string, password: string) {
     try {
-      console.log('🔐 Attempting login for:', email);
       const response = await this.request('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
-      console.log('🔐 Login response:', response);
 
       if (response.success && response.data?.token) {
         await this.setAuthToken(response.data.token);
-        console.log('✅ Token saved successfully');
       }
 
       return {
@@ -89,23 +82,19 @@ class ApiService {
         user: response.data?.user
       };
     } catch (error) {
-      console.error('❌ Login error:', error);
       throw error;
     }
   }
 
   async register(userData: any) {
     try {
-      console.log('📝 Attempting registration for:', userData.email);
       const response = await this.request('/auth/register', {
         method: 'POST',
         body: JSON.stringify(userData),
       });
-      console.log('📝 Registration response:', response);
 
       if (response.success && response.data?.token) {
         await this.setAuthToken(response.data.token);
-        console.log('✅ Token saved successfully');
       }
 
       return {
@@ -115,7 +104,6 @@ class ApiService {
         user: response.data?.user
       };
     } catch (error) {
-      console.error('❌ Registration error:', error);
       throw error;
     }
   }
@@ -177,9 +165,7 @@ class ApiService {
 
   async getFeaturedBooks() {
     try {
-      console.log('🔍 Fetching featured books from:', `${this.baseURL}/books?limit=6`);
   const response = await this.request('/books?limit=6');
-      console.log('📚 Featured books response:', response);
       
       // Transform response to match expected format
       const result = {
@@ -187,10 +173,8 @@ class ApiService {
         message: response.message,
         books: response.data?.books || response.books || []
       };
-      console.log('📖 Transformed result:', result);
       return result;
     } catch (error) {
-      console.error('❌ Error fetching featured books:', error);
       throw error;
     }
   }

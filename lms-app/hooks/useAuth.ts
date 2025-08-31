@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiService from '../services/api';
 import { User } from '../types/book';
@@ -29,14 +29,13 @@ export const useAuth = () => {
         }
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
       await AsyncStorage.removeItem('authToken');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     try {
       const response = await ApiService.login(email, password);
       
@@ -51,7 +50,7 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (userData) => {
+  const register = async (userData: { name: string; email: string; password: string; role: 'borrower' | 'librarian' }) => {
     try {
       const response = await ApiService.register(userData);
       
@@ -72,7 +71,6 @@ export const useAuth = () => {
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Logout error:', error);
       // Still clear local state even if API call fails
       setUser(null);
       setIsAuthenticated(false);
@@ -85,9 +83,7 @@ export const useAuth = () => {
       if (response.success) {
         setUser(response.user);
       }
-    } catch (error) {
-      console.error('Failed to refresh user:', error);
-    }
+  } catch (error) {}
   };
 
   return {

@@ -71,21 +71,16 @@ export const useFeaturedBooks = () => {
 
   const loadFeaturedBooks = async () => {
     try {
-      console.log('🚀 Loading featured books...');
       setIsLoading(true);
       setError(null);
       const response = await ApiService.getFeaturedBooks();
-      console.log('📚 Featured books response in hook:', response);
       
       if (response.success) {
-        console.log('✅ Setting featured books:', response.books);
         setFeaturedBooks(response.books);
       } else {
-        console.error('❌ Failed to load featured books');
         setError('Failed to load featured books');
       }
     } catch (err: any) {
-      console.error('💥 Exception in loadFeaturedBooks:', err);
       setError(err?.message || 'Failed to load featured books');
     } finally {
       setIsLoading(false);

@@ -86,7 +86,6 @@ router.get('/', [
       }
     });
   } catch (error) {
-    console.error('Get books error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching books'
@@ -117,7 +116,6 @@ router.get('/:id', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get book error:', error);
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,
@@ -227,7 +225,6 @@ router.post('/', [
       }
     });
   } catch (error) {
-    console.error('Create book error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while creating book'
@@ -350,7 +347,6 @@ router.put('/:id', [
       }
     });
   } catch (error) {
-    console.error('Update book error:', error);
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,
@@ -401,7 +397,6 @@ router.delete('/:id', [authenticateToken, requireLibrarian], async (req, res) =>
       message: 'Book deleted successfully'
     });
   } catch (error) {
-    console.error('Delete book error:', error);
     if (error.name === 'CastError') {
       return res.status(400).json({
         success: false,

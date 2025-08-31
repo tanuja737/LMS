@@ -56,7 +56,6 @@ export default function ProfileScreen() {
               await logout();
               router.replace('/(auth)/login');
             } catch (error) {
-              console.error('Logout error:', error);
               router.replace('/(auth)/login');
             }
           },

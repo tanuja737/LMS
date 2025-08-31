@@ -125,7 +125,6 @@ router.post('/', [
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    console.error('Borrow book error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while borrowing book'
@@ -204,7 +203,6 @@ router.post('/return', [
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    console.error('Return book error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while returning book'
@@ -261,7 +259,6 @@ router.patch('/renew/:borrowId', [authenticateToken], async (req, res) => {
       data: { borrow }
     });
   } catch (error) {
-    console.error('Renew book error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while renewing book'
@@ -325,7 +322,6 @@ router.get('/my-books', [
       }
     });
   } catch (error) {
-    console.error('Get user books error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching borrowed books'
@@ -421,7 +417,6 @@ router.get('/all', [
       }
     });
   } catch (error) {
-    console.error('Get all borrows error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching borrow records'
@@ -457,7 +452,6 @@ router.get('/overdue', [authenticateToken, requireLibrarian], async (req, res) =
       }
     });
   } catch (error) {
-    console.error('Get overdue books error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching overdue books'
@@ -500,7 +494,6 @@ router.get('/stats', [authenticateToken, requireLibrarian], async (req, res) => 
       }
     });
   } catch (error) {
-    console.error('Get stats error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error while fetching statistics'

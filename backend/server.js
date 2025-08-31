@@ -29,23 +29,30 @@ const corsOrigins = process.env.CORS_ORIGIN
       'http://192.168.254.12:8081',
       'http://192.168.254.12:8082',
       'http://192.168.254.12:8083',
-      'https://tanuzalms.netlify.app'
+      'https://tanuzalms.netlify.app',
+      'https://expo.dev',
+      'https://u.expo.dev',
+      'https://expo.io',
+      'exp://localhost:19000',
+      'exp://localhost:19006',
+      'exp://127.0.0.1:19000',
+      'exp://127.0.0.1:19006'
     ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    console.log(`🌐 CORS Request from origin: ${origin || 'none'}`);
     // Allow requests with no origin (like mobile apps or Postman)
     if (!origin) return callback(null, true);
     
     // Allow common localhost variants and Expo packager proxies
     const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || '');
-    if (isLocalhost || corsOrigins.includes(origin)) {
-      console.log(`✅ Origin ${origin} allowed`);
+    const isExpoDev = /^https?:\/\/.*\.expo\.dev$/.test(origin || '');
+    const isExpoLocal = /^exp:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || '');
+    
+    if (isLocalhost || isExpoDev || isExpoLocal || corsOrigins.includes(origin)) {
       return callback(null, true);
     }
     
-    console.log(`❌ Origin ${origin} not allowed`);
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -58,10 +65,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging middleware
-app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-  next();
-});
+// (Removed verbose request logging middleware)
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -87,7 +91,6 @@ app.use('*', (req, res) => {
 
 // Global error handler
 app.use((error, req, res, next) => {
-  console.error('Global error handler:', error);
   
   // Mongoose validation error
   if (error.name === 'ValidationError') {
@@ -148,13 +151,10 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     
-    console.log('MongoDB connected successfully');
-    
     // Create indexes for better performance
     await createIndexes();
     
   } catch (error) {
-    console.error('Database connection error:', error);
     process.exit(1);
   }
 };
@@ -171,21 +171,18 @@ const createIndexes = async () => {
     await User.createIndexes();
     await Borrow.createIndexes();
 
-    console.log('Database indexes created successfully');
   } catch (error) {
-    console.error('Error creating indexes:', error);
+  // silently ignore index creation logging
   }
 };
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
   await mongoose.connection.close();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  console.log('SIGINT received. Shutting down gracefully...');
   await mongoose.connection.close();
   process.exit(0);
 });
@@ -197,21 +194,17 @@ const startServer = async () => {
   await connectDB();
   
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`Health check: http://localhost:${PORT}/health`);
+  // server started
   });
 };
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Promise Rejection:', err);
   process.exit(1);
 });
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
   process.exit(1);
 });
 

@@ -34,7 +34,6 @@ export default function LoginScreen() {
         Alert.alert('Login Failed', response.message || 'Invalid credentials');
       }
     } catch (error) {
-      console.error('Login error:', error);
       Alert.alert('Login Failed', 'Please check your credentials and try again');
     } finally {
       setLoading(false);

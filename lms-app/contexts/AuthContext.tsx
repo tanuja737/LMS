@@ -53,7 +53,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
       await AsyncStorage.removeItem('authToken');
     } finally {
       setIsLoading(false);
@@ -96,7 +95,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Logout error:', error);
       // Still clear local state even if API call fails
       setUser(null);
       setIsAuthenticated(false);
@@ -110,7 +108,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(response.user);
       }
     } catch (error) {
-      console.error('Failed to refresh user:', error);
     }
   };
 

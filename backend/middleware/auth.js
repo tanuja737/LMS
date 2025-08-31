@@ -43,7 +43,6 @@ const authenticateToken = async (req, res, next) => {
         message: 'Token expired'
       });
     } else {
-      console.error('Authentication error:', error);
       return res.status(500).json({
         success: false,
         message: 'Server error during authentication'

@@ -54,7 +54,6 @@ export default function RegisterScreen() {
         Alert.alert('Registration Failed', response.message || 'Failed to create account');
       }
     } catch (error) {
-      console.error('Registration error:', error);
       Alert.alert('Registration Failed', 'Please try again');
     } finally {
       setLoading(false);
