@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:5000/api';
+// Prefer env, otherwise fall back to the deployed Render API
+// Cast import.meta to any to avoid TS complaining in non-Vite toolchains
+const ENV_API: string | undefined = (import.meta as any)?.env?.VITE_API_URL;
+const API_BASE_URL = ENV_API || 'https://api-lms-u1ki.onrender.com/api';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,

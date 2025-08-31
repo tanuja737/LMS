@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Backend API base URL - prefer env or fall back to localhost
-// For physical device testing, replace with your machine's LAN IP, e.g., http://192.168.x.x:5000/api
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://192.168.254.12:5000/api';
+// Prefer EXPO_PUBLIC_API_BASE_URL; fall back to deployed Render API in production
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'https://api-lms-u1ki.onrender.com/api';
 
 class ApiService {
   baseURL: string;
